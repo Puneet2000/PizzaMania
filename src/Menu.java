@@ -4,19 +4,24 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 
 public class Menu extends JPanel{
 	public ArrayList<JRadioButton> btn1 ,btn2,btn3,btn4;
 	
 	public ButtonGroup bg1,bg2,bg3,bg4;
 	  Box p1,p2,p3,p4;
+	  JPanel jp,jp1;
+	  JTextField jtext;
 	  
-	public JSplitPane j1 ;
+	public JSplitPane j0,j1 ;
 	public JSplitPane j2 ;
-	public JSplitPane j3 ;
+	public JSplitPane j3,j4 ;
 	
 	
 	Menu (){
@@ -63,14 +68,58 @@ public class Menu extends JPanel{
 			p2.add(a);
 		for(JRadioButton a : btn4)
 			p4.add(a);
-		
+		jp = new JPanel();
+		JLabel jlbl = new JLabel("Quantity");
+		jtext = new JTextField("1");
+		jtext.setColumns(10);
+		jp.add(jlbl);
+		jp.add(jtext);
+		jp1 = new JPanel();
+		JLabel jlabel = new JLabel(new ImageIcon("pizza.jpg"));
+		jp1.add(jlabel);
 		j1 =new JSplitPane(JSplitPane.VERTICAL_SPLIT,true,p1,p3);
-		
-		j2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true,p2,p4);
+		j1.setDividerSize(3);
+		j0 =new JSplitPane(JSplitPane.VERTICAL_SPLIT,true,p4,jp);
+		j0.setDividerSize(3);
+		j2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true,p2,j0);
+		j2.setDividerSize(3);
 		j3 =new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true,j1,j2);
-		add(j3);
+		j3.setDividerSize(0);
+		j4=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true,j3,jp1);
+		j4.setDividerSize(0);
+		add(j4);
 		
 		
+	}
+	public Pizza getPizza()
+	{
+		String bread="REGULAR_BASE";
+		String size ="REGULAR";
+		String Topping ="ONION";
+		String cheese ="NORMAL";
+		String quantity ="1";
+		for(JRadioButton a : btn1)
+		{
+		 if(a.isSelected())
+			 bread = a.getText();
+		}
+		for(JRadioButton a : btn2)
+		{
+		 if(a.isSelected())
+			 size = a.getText();
+		}
+		for(JRadioButton a : btn3)
+		{
+		 if(a.isSelected())
+			 Topping = a.getText();
+		}
+		for(JRadioButton a : btn4)
+		{
+		 if(a.isSelected())
+			 cheese = a.getText();
+		}
+		quantity = jtext.getText();
+		return new Pizza(Breads.valueOf(bread),Sizes.valueOf(size),Toppings.valueOf(Topping),Cheese.valueOf(cheese),Integer.parseInt(quantity));
 	}
 
 }
