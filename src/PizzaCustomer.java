@@ -10,12 +10,14 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 public class PizzaCustomer {
  ArrayList<Menu> menu;
+ ArrayList<Pizza> pizzas;
 	public static void main(String args[])
 	{
 		new PizzaCustomer().drawGUI();
@@ -23,8 +25,9 @@ public class PizzaCustomer {
    
 	private void drawGUI()
 	{
-		int count =1;
+		
 		menu = new ArrayList<Menu>();
+		pizzas = new ArrayList<Pizza>();
 		JFrame frame = new JFrame("Pizza Mania");
         frame.setSize(800, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,11 +48,14 @@ public class PizzaCustomer {
         JButton select = new JButton("New Pizza");
         JButton feedback = new JButton("Feedback");
         JButton order = new JButton("Order");
+        JButton help = new JButton("Help");
         middlebar.add(select);
         middlebar.add(Box.createHorizontalStrut(20));
         middlebar.add(order);
         middlebar.add(Box.createHorizontalStrut(20));
         middlebar.add(feedback);
+        middlebar.add(Box.createHorizontalStrut(20));
+        middlebar.add(help);
         
         JTabbedPane jtp = new JTabbedPane();
         
@@ -72,14 +78,37 @@ public class PizzaCustomer {
             }
         }
       );
+        help.addActionListener( new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	JOptionPane.showMessageDialog(frame,
+                	    "Contact- 99999XXXX \nAddress - Shop No-2 ,Second Floor, Main road , Faridabad");
+                
+            }
+        }
+      );
         
         order.addActionListener( new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-               
-                Menu m = menu.get(menu.size()-1);
-                Pizza p = m.getPizza();
+            	pizzas.clear();
+               for (Menu m : menu)
+                 pizzas.add(m.getPizza());
+               for(Pizza p : pizzas)
                 System.out.println("Cost of Pizza is "+ p.getPrice());
+                jtp.removeAll();
+                if(menu.size()>0)
+                {JOptionPane.showMessageDialog(frame,
+                	    "Your order has been Placed \n Thankyou");
+                  menu.clear();
+                }
+                else
+                {
+                	JOptionPane.showMessageDialog(frame,
+                		    "No pizzas selected",
+                		    "Inane error",
+                		    JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
       );
