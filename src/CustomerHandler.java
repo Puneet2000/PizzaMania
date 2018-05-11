@@ -28,23 +28,36 @@ final DataOutputStream dos;
 		
 		while (true)
 		{
+			
 			String s;
 			try {
 				s = dis.readUTF();
+				if(s.equals("Closed"))
+					break;
 				System.out.println("New order Received : "+ s);
 				double total =0;
 				
-	    String message = "Your Total cost  = " + total;
-	    
-	    dos.writeUTF(message);
+		String message = "Your Total cost  = " + total;
+		
+		dos.writeUTF(message);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
    
-    
+   
 		}
+		
+		try {
+			dis.close();
+			dos.close();
+			customer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	} 
   }
