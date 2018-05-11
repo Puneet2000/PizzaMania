@@ -149,8 +149,7 @@ public static DataOutputStream dos ;
             	Object[] possibilities = {"CASH_ON_DELIVERY","ONLINE"};
             	String type = (String)JOptionPane.showInputDialog(
             	                    frame,
-            	                    "Complete the sentence:\n"
-            	                    + "\"Green eggs and...\"",
+            	                    "Payment Method",
             	                    "Customized Dialog",
             	                    JOptionPane.PLAIN_MESSAGE,
             	                    null,
@@ -175,7 +174,7 @@ public static DataOutputStream dos ;
 						}
 						jtp.removeAll();
 	                	JOptionPane.showMessageDialog(frame,
-	                	    "Your order has been Placed \n Thankyou");
+	                	    "Thankyou");
 	                  menu.clear();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
