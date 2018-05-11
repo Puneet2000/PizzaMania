@@ -26,6 +26,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import org.apache.commons.io.IOUtils;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 public class PizzaCustomer{
  ArrayList<Menu> menu;
@@ -136,15 +137,30 @@ public static DataOutputStream dos ;
         order.addActionListener( new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+            	
+
+            	
+
+            	
             	pizzas.clear();
                
                 if(menu.size()>0)
-                {
+                {  String customerName = JOptionPane.showInputDialog(frame,"Please enter Your Name");
+            	Object[] possibilities = {"CASH_ON_DELIVERY","ONLINE"};
+            	String type = (String)JOptionPane.showInputDialog(
+            	                    frame,
+            	                    "Complete the sentence:\n"
+            	                    + "\"Green eggs and...\"",
+            	                    "Customized Dialog",
+            	                    JOptionPane.PLAIN_MESSAGE,
+            	                    null,
+            	                    possibilities,
+            	                    "ONLINE");
                 	for (Menu m : menu)
                         pizzas.add(m.getPizza());
                      try {
-                    	
-                    	 String Json = new GsonBuilder().setPrettyPrinting().create().toJson(pizzas);
+                    	 Order order = new Order (pizzas,customerName, OrderType.valueOf(type));
+                    	 String Json = new Gson().toJson(order);
 						dos.writeUTF(Json);
 						
 					
@@ -152,7 +168,8 @@ public static DataOutputStream dos ;
 						while (true)
 					{       
 							String r = dis.readUTF();
-							System.out.println(r);
+							JOptionPane.showMessageDialog(frame,
+			                	    r);
 							
 							break;
 						}

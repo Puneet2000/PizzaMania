@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 
 
 public class CustomerHandler extends Thread {
@@ -34,10 +37,16 @@ final DataOutputStream dos;
 				s = dis.readUTF();
 				if(s.equals("Closed"))
 					break;
-				System.out.println("New order Received : "+ s);
-				double total =0;
 				
-		String message = "Your Total cost  = " + total;
+				
+				Order order = new Gson().fromJson(s,Order.class);
+				System.out.println("New order Received :" + order.OrderId);
+				double total =0;
+				ArrayList<Pizza> p = order.pizza;
+				for (Pizza pi : p)
+					total = total + pi.getPrice();
+				order.price = total*(order.type.getFactor());
+		String message = order.generateBill();
 		
 		dos.writeUTF(message);
 			} catch (IOException e) {
