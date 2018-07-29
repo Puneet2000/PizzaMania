@@ -4,6 +4,7 @@
 - Using **swing** for GUI.
 
 ### To use :
+- You need to have Gson jar file first
 - For starting the PizzaServer run the file name **PizzaServer.class**
 - The server will open at **InetAdress - 127.0.0.1** and **port - 5000**
 - For a customer to order Pizza run file **PizzaCustomer.class**
